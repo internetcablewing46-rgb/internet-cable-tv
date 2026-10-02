@@ -140,9 +140,35 @@
 
 </div>
 
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
 <script>
 
-  const GAS_URL = "ใส่ Web App URL ของ Apps Script ตรงนี้";
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbyMpxvS7QIFOfTOe8x6Rea9GA79HbIE2UIolDKBTixXxuvTrGoMoC5cDK6YvEnFgUc7/exec";
+  const LIFF_ID = "ใส่ LIFF ID ของคุณตรงนี้";
+  async function initLIFF() {
+  try {
+    await liff.init({
+      liffId: LIFF_ID
+    });
+
+    if (!liff.isLoggedIn()) {
+      liff.login();
+      return;
+    }
+
+    const profile = await liff.getProfile();
+
+    window.lineUserId = profile.userId;
+
+    console.log("LINE User ID:", profile.userId);
+
+  } catch (error) {
+    console.error("LIFF Error:", error);
+  }
+}
+
+initLIFF();
 
   let isSubmitting = false;
 
@@ -188,7 +214,7 @@
         detail:
           document.getElementById("detail").value,
 
-        line_user_id: ""
+        line_user_id: window.lineUserId || ""
       };
 
       try {
