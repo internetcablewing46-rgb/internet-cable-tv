@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>แจ้งเสีย Internet และ Cable TV</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #06c755;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #aaa;
+    }
+
+    .message {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>📡 แจ้งเสีย Internet และ Cable TV</h1>
+
+  <form id="reportForm">
+
+    <label>ประเภท</label>
+    <select id="type" required>
+      <option value="">-- เลือกประเภท --</option>
+      <option value="Internet">Internet</option>
+      <option value="Cable TV">Cable TV</option>
+    </select>
+
+    <label>เบอร์โทร</label>
+    <input
+      type="tel"
+      id="phone"
+      placeholder="กรอกเบอร์โทร"
+      required
+    >
+
+    <label>ผู้แจ้ง</label>
+    <input
+      type="text"
+      id="reporter"
+      placeholder="ชื่อผู้แจ้ง"
+      required
+    >
+
+    <label>ซอย/บ้านเลขที่</label>
+    <input
+      type="text"
+      id="address"
+      placeholder="เช่น ซอย 2 บ้านเลขที่ 45"
+      required
+    >
+
+    <label>ปัญหา</label>
+    <input
+      type="text"
+      id="problem"
+      placeholder="เช่น Internet ใช้งานไม่ได้"
+      required
+    >
+
+    <label>รายละเอียด</label>
+    <textarea
+      id="detail"
+      placeholder="รายละเอียดเพิ่มเติม"
+    ></textarea>
+
+    <button type="submit" id="submitBtn">
+      แจ้งเสีย
+    </button>
+
+    <div class="message" id="message"></div>
+
+  </form>
+
+</div>
+
+<script>
+
+  const GAS_URL = "ใส่ Web App URL ของ Apps Script ตรงนี้";
+
+  let isSubmitting = false;
+
+  document
+    .getElementById("reportForm")
+    .addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+      if (isSubmitting) {
+        return;
+      }
+
+      isSubmitting = true;
+
+      const submitBtn =
+        document.getElementById("submitBtn");
+
+      const message =
+        document.getElementById("message");
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "กำลังส่งข้อมูล...";
+
+      const data = {
+        action: "save_report",
+
+        type:
+          document.getElementById("type").value,
+
+        phone:
+          document.getElementById("phone").value,
+
+        reporter:
+          document.getElementById("reporter").value,
+
+        address:
+          document.getElementById("address").value,
+
+        problem:
+          document.getElementById("problem").value,
+
+        detail:
+          document.getElementById("detail").value,
+
+        line_user_id: ""
+      };
+
+      try {
+
+        const response = await fetch(GAS_URL, {
+          method: "POST",
+          body: JSON.stringify(data)
+        });
+
+        const result =
+          await response.json();
+
+        if (result.success) {
+
+          message.textContent =
+            "✅ แจ้งเสียเรียบร้อยแล้ว";
+
+          message.style.color = "green";
+
+          document
+            .getElementById("reportForm")
+            .reset();
+
+        } else {
+
+          message.textContent =
+            "❌ " + (result.message || "เกิดข้อผิดพลาด");
+
+          message.style.color = "red";
+        }
+
+      } catch (error) {
+
+        message.textContent =
+          "❌ ไม่สามารถเชื่อมต่อระบบได้";
+
+        message.style.color = "red";
+
+      }
+
+      isSubmitting = false;
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = "แจ้งเสีย";
+
+    });
+
+</script>
+
+</body>
+</html>
