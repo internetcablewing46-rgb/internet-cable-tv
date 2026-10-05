@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>แจ้งเสีย Internet - Cable TV</title>
+
 
   <style>
 
@@ -12,327 +18,927 @@
       box-sizing: border-box;
     }
 
+
     body {
+
       margin: 0;
+
       min-height: 100vh;
-      font-family: Arial, "Noto Sans Thai", sans-serif;
-      background: linear-gradient(135deg, #e8f1ff, #f7f9fc);
+
+      font-family:
+        Arial,
+        "Noto Sans Thai",
+        sans-serif;
+
+      background:
+        linear-gradient(
+          135deg,
+          #e8f1ff,
+          #f7f9fc
+        );
+
       color: #1f2937;
+
       padding: 20px 14px;
+
     }
 
+
     .container {
+
       width: 100%;
+
       max-width: 520px;
+
       margin: 0 auto;
+
     }
+
 
     /* Header */
 
     .header {
+
       text-align: center;
+
       margin-bottom: 18px;
+
     }
+
 
     .icon {
+
       width: 72px;
+
       height: 72px;
+
       margin: 0 auto 12px;
+
       border-radius: 22px;
-      background: linear-gradient(135deg, #1976d2, #42a5f5);
+
+      background:
+        linear-gradient(
+          135deg,
+          #1976d2,
+          #42a5f5
+        );
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       font-size: 38px;
-      box-shadow: 0 10px 25px rgba(25, 118, 210, 0.25);
+
+      box-shadow:
+        0 10px 25px
+        rgba(25, 118, 210, 0.25);
+
     }
+
 
     .header h1 {
+
       margin: 0;
+
       font-size: 24px;
+
       color: #123b63;
+
     }
 
+
     .header p {
+
       margin: 8px 0 0;
+
       color: #64748b;
+
       font-size: 14px;
+
     }
+
 
     /* Card */
 
     .card {
-      background: rgba(255, 255, 255, 0.96);
+
+      background:
+        rgba(255, 255, 255, 0.96);
+
       border-radius: 22px;
+
       padding: 24px 20px;
-      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.10);
-      border: 1px solid rgba(255,255,255,0.8);
+
+      box-shadow:
+        0 12px 35px
+        rgba(15, 23, 42, 0.10);
+
+      border:
+        1px solid
+        rgba(255,255,255,0.8);
+
     }
+
 
     /* Form */
 
     .form-group {
+
       margin-bottom: 18px;
+
     }
+
 
     label {
+
       display: block;
+
       margin-bottom: 7px;
+
       font-weight: bold;
+
       font-size: 15px;
+
       color: #334155;
+
     }
 
+
     .required {
+
       color: #ef4444;
+
       margin-left: 3px;
+
     }
+
 
     input,
     select,
     textarea {
+
       width: 100%;
-      border: 1px solid #d6dce5;
+
+      border:
+        1px solid
+        #d6dce5;
+
       border-radius: 12px;
+
       background: #f8fafc;
+
       padding: 13px 14px;
+
       font-size: 16px;
+
       color: #1f2937;
+
       outline: none;
+
       transition: 0.2s;
+
     }
+
 
     input:focus,
     select:focus,
     textarea:focus {
+
       border-color: #2196f3;
+
       background: white;
-      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.12);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(33, 150, 243, 0.12);
+
     }
 
+
     textarea {
+
       min-height: 110px;
+
       resize: vertical;
+
       line-height: 1.5;
+
     }
+
 
     input::placeholder,
     textarea::placeholder {
+
       color: #9ca3af;
+
     }
+
 
     /* Button */
 
     button {
+
       width: 100%;
+
       margin-top: 8px;
+
       padding: 15px;
+
       border: none;
+
       border-radius: 14px;
-      background: linear-gradient(135deg, #1976d2, #2196f3);
+
+      background:
+        linear-gradient(
+          135deg,
+          #1976d2,
+          #2196f3
+        );
+
       color: white;
+
       font-size: 18px;
+
       font-weight: bold;
+
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(25, 118, 210, 0.25);
+
+      box-shadow:
+        0 8px 18px
+        rgba(25, 118, 210, 0.25);
+
       transition: 0.2s;
+
     }
+
 
     button:active {
+
       transform: scale(0.98);
+
     }
+
 
     button:disabled {
+
       background: #94a3b8;
+
       box-shadow: none;
+
       cursor: not-allowed;
+
     }
 
-    /* Message */
 
-    #message {
-      margin-top: 18px;
+    /* Success */
+
+    .success {
+
       text-align: center;
-      font-weight: bold;
-      font-size: 16px;
-      min-height: 24px;
+
     }
+
+
+    .success-icon {
+
+      width: 90px;
+
+      height: 90px;
+
+      margin: 0 auto 18px;
+
+      border-radius: 50%;
+
+      background: #dcfce7;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 50px;
+
+      box-shadow:
+        0 8px 25px
+        rgba(22, 163, 74, 0.15);
+
+    }
+
+
+    .success h2 {
+
+      margin: 0;
+
+      color: #15803d;
+
+      font-size: 26px;
+
+    }
+
+
+    .success-text {
+
+      margin: 8px 0 20px;
+
+      color: #64748b;
+
+      font-size: 14px;
+
+      line-height: 1.6;
+
+    }
+
+
+    /* Ticket */
+
+    .ticket-box {
+
+      background: #eff6ff;
+
+      border:
+        1px solid
+        #bfdbfe;
+
+      border-radius: 16px;
+
+      padding: 16px;
+
+      margin-bottom: 18px;
+
+      text-align: center;
+
+    }
+
+
+    .ticket-label {
+
+      color: #64748b;
+
+      font-size: 13px;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .ticket-number {
+
+      color: #1565c0;
+
+      font-size: 25px;
+
+      font-weight: bold;
+
+      letter-spacing: 0.5px;
+
+    }
+
+
+    /* Detail */
+
+    .detail-box {
+
+      text-align: left;
+
+      background: #f8fafc;
+
+      border-radius: 16px;
+
+      padding: 16px;
+
+      margin-bottom: 18px;
+
+    }
+
+
+    .detail-row {
+
+      padding: 8px 0;
+
+      border-bottom:
+        1px solid
+        #e5e7eb;
+
+      line-height: 1.5;
+
+    }
+
+
+    .detail-row:last-child {
+
+      border-bottom: none;
+
+    }
+
+
+    .detail-label {
+
+      display: block;
+
+      font-size: 13px;
+
+      color: #64748b;
+
+      margin-bottom: 2px;
+
+    }
+
+
+    .detail-value {
+
+      font-size: 15px;
+
+      color: #1f2937;
+
+      font-weight: 500;
+
+      word-break: break-word;
+
+    }
+
+
+    /* Status */
+
+    .status-box {
+
+      background: #fff7ed;
+
+      border:
+        1px solid
+        #fed7aa;
+
+      border-radius: 14px;
+
+      padding: 13px;
+
+      margin-bottom: 18px;
+
+      text-align: center;
+
+    }
+
+
+    .status-label {
+
+      display: block;
+
+      color: #9a3412;
+
+      font-size: 13px;
+
+      margin-bottom: 4px;
+
+    }
+
+
+    .status-value {
+
+      color: #ea580c;
+
+      font-size: 17px;
+
+      font-weight: bold;
+
+    }
+
+
+    /* Back button */
+
+    .back-button {
+
+      background:
+        linear-gradient(
+          135deg,
+          #475569,
+          #64748b
+        );
+
+      box-shadow:
+        0 8px 18px
+        rgba(71, 85, 105, 0.20);
+
+    }
+
 
     /* Footer */
 
     .footer {
+
       text-align: center;
+
       margin-top: 16px;
+
       color: #94a3b8;
+
       font-size: 12px;
+
     }
+
 
     @media (max-width: 480px) {
 
       body {
+
         padding: 16px 10px;
+
       }
+
 
       .card {
+
         padding: 20px 16px;
+
         border-radius: 18px;
+
       }
 
+
       .header h1 {
+
         font-size: 22px;
+
+      }
+
+
+      .success h2 {
+
+        font-size: 23px;
+
       }
 
     }
 
   </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
-  <div class="header">
 
-    <div class="icon">
-      📡
+  <!-- ========================= -->
+  <!-- หน้าฟอร์ม -->
+  <!-- ========================= -->
+
+  <div id="formPage">
+
+
+    <div class="header">
+
+      <div class="icon">
+        📡
+      </div>
+
+      <h1>
+        แจ้งเสีย Internet - Cable TV
+      </h1>
+
+      <p>
+        กรุณากรอกข้อมูลปัญหาที่พบ
+      </p>
+
     </div>
 
-    <h1>
-      แจ้งเสีย Internet - Cable TV
-    </h1>
 
-    <p>
-      กรุณากรอกข้อมูลปัญหาที่พบ
-    </p>
+    <div class="card">
+
+
+      <form id="reportForm">
+
+
+        <div class="form-group">
+
+          <label>
+            ประเภท
+            <span class="required">*</span>
+          </label>
+
+          <select
+            id="type"
+            required
+          >
+
+            <option value="">
+              -- เลือกประเภท --
+            </option>
+
+            <option value="Internet">
+              🌐 Internet
+            </option>
+
+            <option value="Cable TV">
+              📺 Cable TV
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            เบอร์โทร
+            <span class="required">*</span>
+          </label>
+
+          <input
+            type="text"
+            id="phone"
+            placeholder="กรอกเบอร์โทร"
+            inputmode="numeric"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            ผู้แจ้ง
+            <span class="required">*</span>
+          </label>
+
+          <input
+            type="text"
+            id="reporter"
+            placeholder="ชื่อผู้แจ้ง"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            ซอย / บ้านเลขที่
+          </label>
+
+          <input
+            type="text"
+            id="address"
+            placeholder="เช่น ซอย 2 บ้านเลขที่ 45"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            ปัญหา
+            <span class="required">*</span>
+          </label>
+
+          <input
+            type="text"
+            id="problem"
+            placeholder="เช่น Internet ใช้งานไม่ได้"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            รายละเอียด
+          </label>
+
+          <textarea
+            id="detail"
+            placeholder="ระบุรายละเอียดเพิ่มเติม เช่น ไฟสถานะผิดปกติ หรือใช้งานไม่ได้ตั้งแต่เวลาใด"
+          ></textarea>
+
+        </div>
+
+
+        <button
+          type="submit"
+          id="submitButton"
+        >
+          📩 แจ้งเสีย
+        </button>
+
+
+      </form>
+
+
+    </div>
+
 
   </div>
 
 
-  <div class="card">
+  <!-- ========================= -->
+  <!-- หน้าสำเร็จ -->
+  <!-- ========================= -->
 
-    <form id="reportForm">
+  <div
+    id="successPage"
+    style="display:none;"
+  >
 
-      <div class="form-group">
 
-        <label>
-          ประเภท <span class="required">*</span>
-        </label>
+    <div class="header">
 
-        <select id="type" required>
+      <div class="icon">
+        📡
+      </div>
 
-          <option value="">
-            -- เลือกประเภท --
-          </option>
+      <h1>
+        แจ้งเสีย Internet - Cable TV
+      </h1>
 
-          <option value="Internet">
-            🌐 Internet
-          </option>
+    </div>
 
-          <option value="Cable TV">
-            📺 Cable TV
-          </option>
 
-        </select>
+    <div class="card success">
+
+
+      <div class="success-icon">
+        ✅
+      </div>
+
+
+      <h2>
+        แจ้งเสียเรียบร้อยแล้ว
+      </h2>
+
+
+      <div class="success-text">
+
+        ระบบได้รับข้อมูลของคุณเรียบร้อยแล้ว<br>
+
+        เจ้าหน้าที่จะดำเนินการตรวจสอบโดยเร็วที่สุด
 
       </div>
 
 
-      <div class="form-group">
+      <div class="ticket-box">
 
-        <label>
-          เบอร์โทร <span class="required">*</span>
-        </label>
+        <div class="ticket-label">
+          หมายเลข Ticket
+        </div>
 
-        <input
-          type="text"
-          id="phone"
-          placeholder="กรอกเบอร์โทร"
-          inputmode="numeric"
-          required
+        <div
+          id="successTicket"
+          class="ticket-number"
         >
+          -
+        </div>
 
       </div>
 
 
-      <div class="form-group">
+      <div class="detail-box">
 
-        <label>
-          ผู้แจ้ง <span class="required">*</span>
-        </label>
 
-        <input
-          type="text"
-          id="reporter"
-          placeholder="ชื่อผู้แจ้ง"
-          required
+        <div class="detail-row">
+
+          <span class="detail-label">
+            ประเภท
+          </span>
+
+          <span
+            id="successType"
+            class="detail-value"
+          >
+            -
+          </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <span class="detail-label">
+            เบอร์โทร
+          </span>
+
+          <span
+            id="successPhone"
+            class="detail-value"
+          >
+            -
+          </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <span class="detail-label">
+            ผู้แจ้ง
+          </span>
+
+          <span
+            id="successReporter"
+            class="detail-value"
+          >
+            -
+          </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <span class="detail-label">
+            ซอย / บ้านเลขที่
+          </span>
+
+          <span
+            id="successAddress"
+            class="detail-value"
+          >
+            -
+          </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <span class="detail-label">
+            ปัญหา
+          </span>
+
+          <span
+            id="successProblem"
+            class="detail-value"
+          >
+            -
+          </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <span class="detail-label">
+            รายละเอียด
+          </span>
+
+          <span
+            id="successDetail"
+            class="detail-value"
+          >
+            -
+          </span>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="status-box">
+
+        <span class="status-label">
+          สถานะปัจจุบัน
+        </span>
+
+        <span
+          id="successStatus"
+          class="status-value"
         >
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>
-          ซอย / บ้านเลขที่
-        </label>
-
-        <input
-          type="text"
-          id="address"
-          placeholder="เช่น ซอย 2 บ้านเลขที่ 45"
-        >
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>
-          ปัญหา <span class="required">*</span>
-        </label>
-
-        <input
-          type="text"
-          id="problem"
-          placeholder="เช่น Internet ใช้งานไม่ได้"
-          required
-        >
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>
-          รายละเอียด
-        </label>
-
-        <textarea
-          id="detail"
-          placeholder="ระบุรายละเอียดเพิ่มเติม เช่น ไฟสถานะผิดปกติ หรือใช้งานไม่ได้ตั้งแต่เวลาใด"
-        ></textarea>
+          รอตรวจสอบ
+        </span>
 
       </div>
 
 
       <button
-        type="submit"
-        id="submitButton"
+        type="button"
+        class="back-button"
+        onclick="showFormPage()"
       >
-        📩 แจ้งเสีย
+        🏠 กลับหน้าหลัก
       </button>
 
-    </form>
 
+    </div>
 
-    <div id="message"></div>
 
   </div>
 
 
   <div class="footer">
+
     ระบบแจ้งเสีย Internet - Cable TV
+
   </div>
+
 
 </div>
 
@@ -342,13 +948,22 @@
 
 <script>
 
+
 const GAS_URL =
   "https://script.google.com/macros/s/AKfycbyMpxvS7QIFOfTOe8x6Rea9GA79HbIE2UIolDKBTixXxuvTrGoMoC5cDK6YvEnFgUc7/exec";
+
 
 const LIFF_ID =
   "2011831663-lTzHshSv";
 
+
 let lineUserId = "";
+
+
+
+/* ========================= */
+/* LINE LIFF */
+/* ========================= */
 
 
 async function initLIFF() {
@@ -359,23 +974,29 @@ async function initLIFF() {
       liffId: LIFF_ID
     });
 
+
     if (!liff.isLoggedIn()) {
 
       liff.login();
 
       return;
+
     }
+
 
     const profile =
       await liff.getProfile();
 
+
     lineUserId =
       profile.userId;
+
 
     console.log(
       "LINE User ID:",
       lineUserId
     );
+
 
   } catch (error) {
 
@@ -392,6 +1013,12 @@ async function initLIFF() {
 initLIFF();
 
 
+
+/* ========================= */
+/* ส่งข้อมูล */
+/* ========================= */
+
+
 document
   .getElementById("reportForm")
   .addEventListener(
@@ -400,17 +1027,15 @@ document
 
       event.preventDefault();
 
+
       const button =
         document.getElementById(
           "submitButton"
         );
 
-      const message =
-        document.getElementById(
-          "message"
-        );
 
       button.disabled = true;
+
 
       button.textContent =
         "⏳ กำลังส่งข้อมูล...";
@@ -458,22 +1083,131 @@ document
 
       try {
 
-        await fetch(
-          GAS_URL,
-          {
-            method: "POST",
-            mode: "no-cors",
-            body: JSON.stringify(data)
-          }
-        );
+
+        /*
+         * สำคัญ:
+         * ใช้ response จาก doPost()
+         * เพื่อรับ Ticket กลับมา
+         */
+
+        const response =
+          await fetch(
+            GAS_URL,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type":
+                  "text/plain;charset=utf-8"
+              },
+              body:
+                JSON.stringify(data)
+            }
+          );
 
 
-        message.textContent =
-          "✅ แจ้งเสียเรียบร้อยแล้ว";
+        const result =
+          await response.json();
 
-        message.style.color =
-          "#16a34a";
 
+        if (!result.success) {
+
+          throw new Error(
+            result.message ||
+            "ไม่สามารถบันทึกข้อมูลได้"
+          );
+
+        }
+
+
+        /* ========================= */
+        /* ใส่ข้อมูลหน้าสำเร็จ */
+        /* ========================= */
+
+
+        document
+          .getElementById(
+            "successTicket"
+          )
+          .textContent =
+            result.ticket || "-";
+
+
+        document
+          .getElementById(
+            "successType"
+          )
+          .textContent =
+            result.type || "-";
+
+
+        document
+          .getElementById(
+            "successPhone"
+          )
+          .textContent =
+            result.phone || "-";
+
+
+        document
+          .getElementById(
+            "successReporter"
+          )
+          .textContent =
+            result.reporter || "-";
+
+
+        document
+          .getElementById(
+            "successAddress"
+          )
+          .textContent =
+            result.address || "-";
+
+
+        document
+          .getElementById(
+            "successProblem"
+          )
+          .textContent =
+            result.problem || "-";
+
+
+        document
+          .getElementById(
+            "successDetail"
+          )
+          .textContent =
+            result.detail || "-";
+
+
+        document
+          .getElementById(
+            "successStatus"
+          )
+          .textContent =
+            result.status ||
+            "รอตรวจสอบ";
+
+
+        /* แสดงหน้าสำเร็จ */
+
+        document
+          .getElementById(
+            "formPage"
+          )
+          .style.display =
+            "none";
+
+
+        document
+          .getElementById(
+            "successPage"
+          )
+          .style.display =
+            "block";
+
+
+        /* ล้างฟอร์ม */
 
         document
           .getElementById(
@@ -484,16 +1218,18 @@ document
 
       } catch (error) {
 
-        message.textContent =
-          "❌ ไม่สามารถส่งข้อมูลได้";
 
-        message.style.color =
-          "#dc2626";
+        alert(
+          "❌ ไม่สามารถส่งข้อมูลได้\n\n" +
+          error.message
+        );
+
 
       }
 
 
       button.disabled = false;
+
 
       button.textContent =
         "📩 แจ้งเสีย";
@@ -501,7 +1237,35 @@ document
     }
   );
 
+
+
+/* ========================= */
+/* กลับหน้าหลัก */
+/* ========================= */
+
+
+function showFormPage() {
+
+  document
+    .getElementById(
+      "successPage"
+    )
+    .style.display =
+      "none";
+
+
+  document
+    .getElementById(
+      "formPage"
+    )
+    .style.display =
+      "block";
+
+}
+
+
 </script>
+
 
 </body>
 </html>
