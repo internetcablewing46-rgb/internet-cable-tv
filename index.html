@@ -7,71 +7,183 @@
   <title>แจ้งเสีย Internet - Cable TV</title>
 
   <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f2f4f7;
       margin: 0;
-      padding: 20px;
+      min-height: 100vh;
+      font-family: Arial, "Noto Sans Thai", sans-serif;
+      background: linear-gradient(135deg, #e8f1ff, #f7f9fc);
+      color: #1f2937;
+      padding: 20px 14px;
     }
 
     .container {
-      max-width: 500px;
-      margin: auto;
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
     }
 
-    h2 {
+    /* Header */
+
+    .header {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 18px;
+    }
+
+    .icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 12px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #1976d2, #42a5f5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      box-shadow: 0 10px 25px rgba(25, 118, 210, 0.25);
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #123b63;
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    /* Card */
+
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 22px;
+      padding: 24px 20px;
+      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.10);
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    /* Form */
+
+    .form-group {
+      margin-bottom: 18px;
     }
 
     label {
       display: block;
-      margin-top: 15px;
-      margin-bottom: 5px;
+      margin-bottom: 7px;
       font-weight: bold;
+      font-size: 15px;
+      color: #334155;
+    }
+
+    .required {
+      color: #ef4444;
+      margin-left: 3px;
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      box-sizing: border-box;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      border: 1px solid #d6dce5;
+      border-radius: 12px;
+      background: #f8fafc;
+      padding: 13px 14px;
       font-size: 16px;
+      color: #1f2937;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #2196f3;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.12);
     }
 
     textarea {
-      min-height: 100px;
+      min-height: 110px;
       resize: vertical;
+      line-height: 1.5;
     }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    /* Button */
 
     button {
       width: 100%;
-      margin-top: 25px;
-      padding: 14px;
+      margin-top: 8px;
+      padding: 15px;
       border: none;
-      border-radius: 8px;
-      background: #1976d2;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #1976d2, #2196f3);
       color: white;
       font-size: 18px;
+      font-weight: bold;
       cursor: pointer;
+      box-shadow: 0 8px 18px rgba(25, 118, 210, 0.25);
+      transition: 0.2s;
+    }
+
+    button:active {
+      transform: scale(0.98);
     }
 
     button:disabled {
-      background: #999;
+      background: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
     }
 
+    /* Message */
+
     #message {
+      margin-top: 18px;
       text-align: center;
-      margin-top: 15px;
       font-weight: bold;
+      font-size: 16px;
+      min-height: 24px;
     }
+
+    /* Footer */
+
+    .footer {
+      text-align: center;
+      margin-top: 16px;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    @media (max-width: 480px) {
+
+      body {
+        padding: 16px 10px;
+      }
+
+      .card {
+        padding: 20px 16px;
+        border-radius: 18px;
+      }
+
+      .header h1 {
+        font-size: 22px;
+      }
+
+    }
+
   </style>
 </head>
 
@@ -79,66 +191,154 @@
 
 <div class="container">
 
-  <h2>📡 แจ้งเสีย Internet - Cable TV</h2>
+  <div class="header">
 
-  <form id="reportForm">
+    <div class="icon">
+      📡
+    </div>
 
-    <label>ประเภท</label>
-    <select id="type" required>
-      <option value="">-- เลือกประเภท --</option>
-      <option value="Internet">Internet</option>
-      <option value="Cable TV">Cable TV</option>
-    </select>
+    <h1>
+      แจ้งเสีย Internet - Cable TV
+    </h1>
 
-    <label>เบอร์โทร</label>
-    <input
-      type="text"
-      id="phone"
-      placeholder="กรอกเบอร์โทร"
-      required
-    >
+    <p>
+      กรุณากรอกข้อมูลปัญหาที่พบ
+    </p>
 
-    <label>ผู้แจ้ง</label>
-    <input
-      type="text"
-      id="reporter"
-      placeholder="ชื่อผู้แจ้ง"
-      required
-    >
+  </div>
 
-    <label>ซอย/บ้านเลขที่</label>
-    <input
-      type="text"
-      id="address"
-      placeholder="เช่น ซอย 2 บ้านเลขที่ 45"
-    >
 
-    <label>ปัญหา</label>
-    <input
-      type="text"
-      id="problem"
-      placeholder="ระบุอาการเสีย"
-      required
-    >
+  <div class="card">
 
-    <label>รายละเอียด</label>
-    <textarea
-      id="detail"
-      placeholder="รายละเอียดเพิ่มเติม"
-    ></textarea>
+    <form id="reportForm">
 
-    <button type="submit" id="submitButton">
-      แจ้งเสีย
-    </button>
+      <div class="form-group">
 
-  </form>
+        <label>
+          ประเภท <span class="required">*</span>
+        </label>
 
-  <div id="message"></div>
+        <select id="type" required>
+
+          <option value="">
+            -- เลือกประเภท --
+          </option>
+
+          <option value="Internet">
+            🌐 Internet
+          </option>
+
+          <option value="Cable TV">
+            📺 Cable TV
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          เบอร์โทร <span class="required">*</span>
+        </label>
+
+        <input
+          type="text"
+          id="phone"
+          placeholder="กรอกเบอร์โทร"
+          inputmode="numeric"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          ผู้แจ้ง <span class="required">*</span>
+        </label>
+
+        <input
+          type="text"
+          id="reporter"
+          placeholder="ชื่อผู้แจ้ง"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          ซอย / บ้านเลขที่
+        </label>
+
+        <input
+          type="text"
+          id="address"
+          placeholder="เช่น ซอย 2 บ้านเลขที่ 45"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          ปัญหา <span class="required">*</span>
+        </label>
+
+        <input
+          type="text"
+          id="problem"
+          placeholder="เช่น Internet ใช้งานไม่ได้"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          รายละเอียด
+        </label>
+
+        <textarea
+          id="detail"
+          placeholder="ระบุรายละเอียดเพิ่มเติม เช่น ไฟสถานะผิดปกติ หรือใช้งานไม่ได้ตั้งแต่เวลาใด"
+        ></textarea>
+
+      </div>
+
+
+      <button
+        type="submit"
+        id="submitButton"
+      >
+        📩 แจ้งเสีย
+      </button>
+
+    </form>
+
+
+    <div id="message"></div>
+
+  </div>
+
+
+  <div class="footer">
+    ระบบแจ้งเสีย Internet - Cable TV
+  </div>
 
 </div>
 
 
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
 
 <script>
 
@@ -213,7 +413,7 @@ document
       button.disabled = true;
 
       button.textContent =
-        "กำลังส่งข้อมูล...";
+        "⏳ กำลังส่งข้อมูล...";
 
 
       const data = {
@@ -272,7 +472,7 @@ document
           "✅ แจ้งเสียเรียบร้อยแล้ว";
 
         message.style.color =
-          "green";
+          "#16a34a";
 
 
         document
@@ -288,7 +488,7 @@ document
           "❌ ไม่สามารถส่งข้อมูลได้";
 
         message.style.color =
-          "red";
+          "#dc2626";
 
       }
 
@@ -296,7 +496,7 @@ document
       button.disabled = false;
 
       button.textContent =
-        "แจ้งเสีย";
+        "📩 แจ้งเสีย";
 
     }
   );
