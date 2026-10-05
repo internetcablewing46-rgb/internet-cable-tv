@@ -151,9 +151,20 @@ function displayReports(reports) {
         🎫 ${report.ticket || "-"}
       </div>
 
-      <div class="status">
-        สถานะ: ${report.status || "-"}
-      </div>
+     <div class="status">
+  สถานะ:
+  <select class="statusSelect">
+    <option value="รอตรวจสอบ" ${report.status === "รอตรวจสอบ" ? "selected" : ""}>
+      รอตรวจสอบ
+    </option>
+    <option value="กำลังดำเนินการ" ${report.status === "กำลังดำเนินการ" ? "selected" : ""}>
+      กำลังดำเนินการ
+    </option>
+    <option value="ซ่อมเสร็จแล้ว" ${report.status === "ซ่อมเสร็จแล้ว" ? "selected" : ""}>
+      ซ่อมเสร็จแล้ว
+    </option>
+  </select>
+</div>
 
       <div class="row">
         <span class="label">ประเภท:</span>
@@ -186,9 +197,14 @@ function displayReports(reports) {
       </div>
 
       <div class="row">
-        <span class="label">ผู้รับผิดชอบ:</span>
-        ${report.technician || "-"}
-      </div>
+  <span class="label">ผู้รับผิดชอบ:</span>
+  <input
+    type="text"
+    class="technicianInput"
+    value="${report.technician || ""}"
+    placeholder="ชื่อผู้รับผิดชอบ"
+  >
+</div>
 
       <div class="row">
         <span class="label">วันที่แจ้ง:</span>
@@ -196,9 +212,18 @@ function displayReports(reports) {
       </div>
 
       <div class="row">
-        <span class="label">วันที่ซ่อมเสร็จ:</span>
-        ${report.completedDate || "-"}
-      </div>
+  <span class="label">วันที่ซ่อมเสร็จ:</span>
+  <input
+    type="date"
+    class="completedDateInput"
+    value="${report.completedDate ? report.completedDate.substring(0, 10) : ""}"
+  >
+</div>
+<button
+  class="saveButton"
+  onclick="saveReport(this, '${report.ticket}')">
+  💾 บันทึก
+</button>
 
     `;
 
@@ -206,6 +231,57 @@ function displayReports(reports) {
 
   });
 
+}
+  async function saveReport(button, ticket) {
+
+  const card = button.closest(".card");
+
+  const status =
+    card.querySelector(".statusSelect").value;
+
+  const technician =
+    card.querySelector(".technicianInput").value;
+
+  const completedDate =
+    card.querySelector(".completedDateInput").value;
+
+  const data = {
+    action: "updateReport",
+    ticket: ticket,
+    status: status,
+    technician: technician,
+    completedDate: completedDate
+  };
+
+  try {
+
+    const response = await fetch(
+      GAS_URL,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(data)
+      }
+    );
+
+    const result = await response.json();
+
+    if (!result.success) {
+      throw new Error(result.message || "บันทึกไม่สำเร็จ");
+    }
+
+    alert("บันทึกข้อมูลเรียบร้อยแล้ว");
+
+  } catch (error) {
+
+    alert(
+      "❌ บันทึกไม่สำเร็จ\n\n" +
+      error.message
+    );
+
+  }
 }
 
 
