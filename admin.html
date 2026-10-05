@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin - Internet Cable TV</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #222;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .ticket {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0066cc;
+    }
+
+    .status {
+      display: inline-block;
+      background: #fff3cd;
+      padding: 5px 10px;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    .row {
+      margin-top: 6px;
+    }
+
+    .label {
+      font-weight: bold;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+    }
+
+    .error {
+      background: #f8d7da;
+      color: #842029;
+      padding: 15px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>📋 ระบบ Admin<br>Internet - Cable TV</h1>
+
+  <div id="reports">
+    <div class="loading">
+      กำลังโหลดรายการ...
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+const GAS_URL =
+  "https://script.google.com/macros/s/AKfycbyMpxvS7QIFOfTOe8x6Rea9GA79HbIE2UIolDKBTixXxuvTrGoMoC5cDK6YvEnFgUc7/exec";
+
+
+async function loadReports() {
+
+  try {
+
+    const response = await fetch(
+      GAS_URL + "?action=getReports"
+    );
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error(data.message || "โหลดข้อมูลไม่สำเร็จ");
+    }
+
+    displayReports(data.reports);
+
+  } catch (error) {
+
+    document.getElementById("reports").innerHTML =
+      `<div class="error">
+        ❌ โหลดข้อมูลไม่สำเร็จ<br><br>
+        ${error.message}
+      </div>`;
+
+  }
+
+}
+
+
+function displayReports(reports) {
+
+  const container =
+    document.getElementById("reports");
+
+  if (!reports || reports.length === 0) {
+
+    container.innerHTML =
+      `<div class="card">
+        ยังไม่มีรายการแจ้งเสีย
+      </div>`;
+
+    return;
+  }
+
+
+  container.innerHTML = "";
+
+
+  reports.reverse().forEach(function(report) {
+
+    const card =
+      document.createElement("div");
+
+    card.className = "card";
+
+
+    card.innerHTML = `
+
+      <div class="ticket">
+        🎫 ${report.ticket || "-"}
+      </div>
+
+      <div class="status">
+        สถานะ: ${report.status || "-"}
+      </div>
+
+      <div class="row">
+        <span class="label">ประเภท:</span>
+        ${report.type || "-"}
+      </div>
+
+      <div class="row">
+        <span class="label">เบอร์โทร:</span>
+        ${report.phone || "-"}
+      </div>
+
+      <div class="row">
+        <span class="label">ผู้แจ้ง:</span>
+        ${report.reporter || "-"}
+      </div>
+
+      <div class="row">
+        <span class="label">ซอย/บ้านเลขที่:</span>
+        ${report.address || "-"}
+      </div>
+
+      <div class="row">
+        <span class="label">ปัญหา:</span>
+        ${report.problem || "-"}
+      </div>
+
+      <div class="row">
+        <span class="label">รายละเอียด:</span>
+        ${report.detail || "-"}
+      </div>
+
+      <div class="row">
+        <span class="label">ผู้รับผิดชอบ:</span>
+        ${report.technician || "-"}
+      </div>
+
+      <div class="row">
+        <span class="label">วันที่แจ้ง:</span>
+        ${report.reportDate || "-"}
+      </div>
+
+      <div class="row">
+        <span class="label">วันที่ซ่อมเสร็จ:</span>
+        ${report.completedDate || "-"}
+      </div>
+
+    `;
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+loadReports();
+
+</script>
+
+</body>
+</html>
