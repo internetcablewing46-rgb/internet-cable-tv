@@ -94,9 +94,8 @@ async function loadReports() {
   try {
 
     const response = await fetch(
-      GAS_URL + "?action=getReports"
-    );
-
+  GAS_URL + "?action=getReports&t=" + Date.now()
+);
     const data = await response.json();
 
     if (!data.success) {
