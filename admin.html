@@ -7,16 +7,17 @@
   <title>Admin - Internet Cable TV</title>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f4f7;
-      margin: 0;
-      padding: 20px;
+
+    * {
+      box-sizing: border-box;
     }
 
-    h1 {
-      text-align: center;
-      color: #222;
+    body {
+      font-family: Arial, "Noto Sans Thai", sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 20px;
+      color: #1e293b;
     }
 
     .container {
@@ -24,254 +25,1027 @@
       margin: auto;
     }
 
+    /* =========================
+       Header
+    ========================= */
+
+    .header {
+      background: linear-gradient(135deg, #1565c0, #1976d2);
+      color: white;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 25px rgba(21, 101, 192, 0.20);
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      color: #dbeafe;
+      font-size: 14px;
+    }
+
+
+    /* =========================
+       Summary
+    ========================= */
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .summary-card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+      border: 1px solid #e2e8f0;
+    }
+
+    .summary-title {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .summary-number {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .waiting {
+      color: #ea580c;
+    }
+
+    .working {
+      color: #2563eb;
+    }
+
+    .completed {
+      color: #16a34a;
+    }
+
+
+    /* =========================
+       Toolbar
+    ========================= */
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .searchBox {
+      flex: 1;
+      min-width: 250px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 12px 15px;
+      font-size: 15px;
+      background: white;
+      outline: none;
+    }
+
+    .searchBox:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 0 3px rgba(25,118,210,0.10);
+    }
+
+    .clearButton {
+      border: none;
+      background: #dc2626;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .clearButton:hover {
+      background: #b91c1c;
+    }
+
+    .showButton {
+      border: none;
+      background: #64748b;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .showButton:hover {
+      background: #475569;
+    }
+
+
+    /* =========================
+       Report Card
+    ========================= */
+
     .card {
       background: white;
-      border-radius: 12px;
-      padding: 15px;
+      border-radius: 16px;
+      padding: 20px;
       margin-bottom: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    .card:hover {
+      box-shadow: 0 7px 22px rgba(0,0,0,0.09);
     }
 
     .ticket {
-      font-size: 20px;
+      font-size: 21px;
       font-weight: bold;
-      color: #0066cc;
+      color: #1565c0;
+      margin-bottom: 12px;
     }
 
-    .status {
-      display: inline-block;
-      background: #fff3cd;
-      padding: 5px 10px;
-      border-radius: 8px;
-      margin-top: 8px;
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px 20px;
+      margin-top: 15px;
     }
 
-    .row {
-      margin-top: 6px;
+    .info-item {
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
     }
 
     .label {
       font-weight: bold;
+      color: #64748b;
     }
+
+    .problem-box {
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 15px;
+    }
+
+    .detail-box {
+      background: #f8fafc;
+      border-left: 4px solid #94a3b8;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+
+    /* =========================
+       Status
+    ========================= */
+
+    .statusArea {
+      margin-top: 15px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+
+    .statusLabel {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      color: #64748b;
+      margin-bottom: 7px;
+    }
+
+    .statusSelect {
+      width: 100%;
+      padding: 11px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+
+    /* =========================
+       Inputs
+    ========================= */
+
+    .inputGroup {
+      margin-top: 12px;
+    }
+
+    .inputGroup label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .technicianInput,
+    .completedDateInput {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 14px;
+      background: white;
+      outline: none;
+    }
+
+    .technicianInput:focus,
+    .completedDateInput:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 0 3px rgba(25,118,210,0.08);
+    }
+
+
+    /* =========================
+       Save Button
+    ========================= */
+
+    .saveButton {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      border: none;
+      border-radius: 11px;
+      background: #1976d2;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .saveButton:hover {
+      background: #1565c0;
+    }
+
+
+    /* =========================
+       Loading / Error
+    ========================= */
 
     .loading {
       text-align: center;
-      padding: 30px;
-      color: #666;
+      padding: 45px;
+      color: #64748b;
+      background: white;
+      border-radius: 16px;
     }
 
     .error {
-      background: #f8d7da;
-      color: #842029;
-      padding: 15px;
-      border-radius: 10px;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid #fecaca;
     }
+
+    .empty {
+      text-align: center;
+      padding: 45px;
+      background: white;
+      border-radius: 16px;
+      color: #64748b;
+    }
+
+
+    /* =========================
+       Mobile
+    ========================= */
+
+    @media (max-width: 700px) {
+
+      body {
+        padding: 10px;
+      }
+
+      .header {
+        padding: 20px;
+      }
+
+      .header h1 {
+        font-size: 21px;
+      }
+
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar {
+        flex-direction: column;
+      }
+
+      .searchBox,
+      .clearButton,
+      .showButton {
+        width: 100%;
+      }
+
+    }
+
   </style>
 </head>
+
 
 <body>
 
 <div class="container">
 
-  <h1>📋 ระบบ Admin<br>Internet - Cable TV</h1>
+
+  <!-- Header -->
+
+  <div class="header">
+
+    <h1>
+      📋 ระบบจัดการงานแจ้งเสีย
+    </h1>
+
+    <p>
+      Internet - Cable TV | Admin
+    </p>
+
+  </div>
+
+
+  <!-- Summary -->
+
+  <div class="summary">
+
+    <div class="summary-card">
+
+      <div class="summary-title">
+        🟠 รอตรวจสอบ
+      </div>
+
+      <div
+        id="waitingCount"
+        class="summary-number waiting">
+        0
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-title">
+        🔵 กำลังดำเนินการ
+      </div>
+
+      <div
+        id="workingCount"
+        class="summary-number working">
+        0
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-title">
+        🟢 ซ่อมเสร็จแล้ว
+      </div>
+
+      <div
+        id="completedCount"
+        class="summary-number completed">
+        0
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Toolbar -->
+
+  <div class="toolbar">
+
+    <input
+      type="text"
+      id="searchBox"
+      class="searchBox"
+      placeholder="🔍 ค้นหา Ticket / ผู้แจ้ง / เบอร์โทร..."
+      oninput="filterReports()"
+    >
+
+    <button
+      class="clearButton"
+      onclick="clearCompleted()">
+      🧹 เคลียร์งานที่ซ่อมเสร็จแล้ว
+    </button>
+
+    <button
+      class="showButton"
+      onclick="showCompleted()">
+      ↩️ แสดงงานที่เคลียร์แล้ว
+    </button>
+
+  </div>
+
+
+  <!-- Reports -->
 
   <div id="reports">
+
     <div class="loading">
-      กำลังโหลดรายการ...
+      ⏳ กำลังโหลดรายการ...
     </div>
+
   </div>
+
 
 </div>
 
+
 <script>
+
 
 const GAS_URL =
   "https://script.google.com/macros/s/AKfycbyMpxvS7QIFOfTOe8x6Rea9GA79HbIE2UIolDKBTixXxuvTrGoMoC5cDK6YvEnFgUc7/exec";
 
 
+let allReports = [];
+
+let hiddenCompletedTickets =
+  JSON.parse(
+    localStorage.getItem("hiddenCompletedTickets") || "[]"
+  );
+
+
+/* =========================
+   Load Reports
+========================= */
+
 async function loadReports() {
 
   try {
 
-    const response = await fetch(
-  GAS_URL + "?action=getReports&t=" + Date.now()
-);
-    const data = await response.json();
+    const response =
+      await fetch(
+        GAS_URL +
+        "?action=getReports&t=" +
+        Date.now()
+      );
+
+    const data =
+      await response.json();
 
     if (!data.success) {
-      throw new Error(data.message || "โหลดข้อมูลไม่สำเร็จ");
+
+      throw new Error(
+        data.message ||
+        "โหลดข้อมูลไม่สำเร็จ"
+      );
+
     }
 
-    displayReports(data.reports);
+    allReports =
+      data.reports || [];
+
+    updateSummary();
+
+    displayReports(allReports);
 
   } catch (error) {
 
     document.getElementById("reports").innerHTML =
+
       `<div class="error">
-        ❌ โหลดข้อมูลไม่สำเร็จ<br><br>
+
+        ❌ โหลดข้อมูลไม่สำเร็จ
+
+        <br><br>
+
         ${error.message}
+
       </div>`;
 
   }
 
 }
 
+
+/* =========================
+   Summary
+========================= */
+
+function updateSummary() {
+
+  let waiting = 0;
+  let working = 0;
+  let completed = 0;
+
+
+  allReports.forEach(function(report) {
+
+    if (report.status === "รอตรวจสอบ") {
+      waiting++;
+    }
+
+    if (report.status === "กำลังดำเนินการ") {
+      working++;
+    }
+
+    if (report.status === "ซ่อมเสร็จแล้ว") {
+      completed++;
+    }
+
+  });
+
+
+  document.getElementById(
+    "waitingCount"
+  ).textContent = waiting;
+
+
+  document.getElementById(
+    "workingCount"
+  ).textContent = working;
+
+
+  document.getElementById(
+    "completedCount"
+  ).textContent = completed;
+
+}
+
+
+/* =========================
+   Display Reports
+========================= */
 
 function displayReports(reports) {
 
   const container =
     document.getElementById("reports");
 
+
   if (!reports || reports.length === 0) {
 
     container.innerHTML =
-      `<div class="card">
-        ยังไม่มีรายการแจ้งเสีย
+
+      `<div class="empty">
+
+        📭 ยังไม่มีรายการแจ้งเสีย
+
       </div>`;
 
     return;
+
   }
 
 
   container.innerHTML = "";
 
 
-  reports.reverse().forEach(function(report) {
-
-    const card =
-      document.createElement("div");
-
-    card.className = "card";
+  [...reports]
+    .reverse()
+    .forEach(function(report) {
 
 
-    card.innerHTML = `
+      if (
+        report.status === "ซ่อมเสร็จแล้ว" &&
+        hiddenCompletedTickets.includes(
+          report.ticket
+        )
+      ) {
 
-      <div class="ticket">
-        🎫 ${report.ticket || "-"}
-      </div>
+        return;
 
-     <div class="status">
-  สถานะ:
-  <select class="statusSelect">
-    <option value="รอตรวจสอบ" ${report.status === "รอตรวจสอบ" ? "selected" : ""}>
-      รอตรวจสอบ
-    </option>
-    <option value="กำลังดำเนินการ" ${report.status === "กำลังดำเนินการ" ? "selected" : ""}>
-      กำลังดำเนินการ
-    </option>
-    <option value="ซ่อมเสร็จแล้ว" ${report.status === "ซ่อมเสร็จแล้ว" ? "selected" : ""}>
-      ซ่อมเสร็จแล้ว
-    </option>
-  </select>
-</div>
+      }
 
-      <div class="row">
-        <span class="label">ประเภท:</span>
-        ${report.type || "-"}
-      </div>
 
-      <div class="row">
-        <span class="label">เบอร์โทร:</span>
-        ${report.phone || "-"}
-      </div>
+      const card =
+        document.createElement("div");
 
-      <div class="row">
-        <span class="label">ผู้แจ้ง:</span>
-        ${report.reporter || "-"}
-      </div>
 
-      <div class="row">
-        <span class="label">ซอย/บ้านเลขที่:</span>
-        ${report.address || "-"}
-      </div>
+      card.className = "card";
 
-      <div class="row">
-        <span class="label">ปัญหา:</span>
-        ${report.problem || "-"}
-      </div>
 
-      <div class="row">
-        <span class="label">รายละเอียด:</span>
-        ${report.detail || "-"}
-      </div>
+      card.setAttribute(
+        "data-ticket",
+        report.ticket || ""
+      );
 
-      <div class="row">
-  <span class="label">ผู้รับผิดชอบ:</span>
-  <input
-    type="text"
-    class="technicianInput"
-    value="${report.technician || ""}"
-    placeholder="ชื่อผู้รับผิดชอบ"
-  >
-</div>
 
-      <div class="row">
-        <span class="label">วันที่แจ้ง:</span>
-        ${report.reportDate || "-"}
-      </div>
+      card.innerHTML = `
 
-      <div class="row">
-  <span class="label">วันที่ซ่อมเสร็จ:</span>
-  <input
-    type="date"
-    class="completedDateInput"
-    value="${report.completedDate ? report.completedDate.substring(0, 10) : ""}"
-  >
-</div>
-<button
-  class="saveButton"
-  onclick="saveReport(this, '${report.ticket}')">
-  💾 บันทึก
-</button>
+        <div class="ticket">
 
-    `;
+          🎫 ${report.ticket || "-"}
 
-    container.appendChild(card);
+        </div>
+
+
+        <div class="statusArea">
+
+          <label class="statusLabel">
+            สถานะงาน
+          </label>
+
+          <select class="statusSelect">
+
+            <option
+              value="รอตรวจสอบ"
+              ${report.status === "รอตรวจสอบ" ? "selected" : ""}>
+              🟠 รอตรวจสอบ
+            </option>
+
+            <option
+              value="กำลังดำเนินการ"
+              ${report.status === "กำลังดำเนินการ" ? "selected" : ""}>
+              🔵 กำลังดำเนินการ
+            </option>
+
+            <option
+              value="ซ่อมเสร็จแล้ว"
+              ${report.status === "ซ่อมเสร็จแล้ว" ? "selected" : ""}>
+              🟢 ซ่อมเสร็จแล้ว
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="info-grid">
+
+          <div class="info-item">
+            <span class="label">📡 ประเภท:</span>
+            ${report.type || "-"}
+          </div>
+
+          <div class="info-item">
+            <span class="label">☎️ เบอร์โทร:</span>
+            ${report.phone || "-"}
+          </div>
+
+          <div class="info-item">
+            <span class="label">👤 ผู้แจ้ง:</span>
+            ${report.reporter || "-"}
+          </div>
+
+          <div class="info-item">
+            <span class="label">🏠 ซอย/บ้านเลขที่:</span>
+            ${report.address || "-"}
+          </div>
+
+          <div class="info-item">
+            <span class="label">📅 วันที่แจ้ง:</span>
+            ${report.reportDate || "-"}
+          </div>
+
+        </div>
+
+
+        <div class="problem-box">
+
+          <div class="label">
+            ⚠️ ปัญหา
+          </div>
+
+          <div>
+            ${report.problem || "-"}
+          </div>
+
+        </div>
+
+
+        <div class="detail-box">
+
+          <div class="label">
+            📝 รายละเอียด
+          </div>
+
+          <div>
+            ${report.detail || "-"}
+          </div>
+
+        </div>
+
+
+        <div class="inputGroup">
+
+          <label>
+            🔧 ผู้รับผิดชอบ
+          </label>
+
+          <input
+            type="text"
+            class="technicianInput"
+            value="${report.technician || ""}"
+            placeholder="ชื่อผู้รับผิดชอบ"
+          >
+
+        </div>
+
+
+        <div class="inputGroup">
+
+          <label>
+            📅 วันที่ซ่อมเสร็จ
+          </label>
+
+          <input
+            type="date"
+            class="completedDateInput"
+            value="${
+              report.completedDate
+              ? report.completedDate.substring(0, 10)
+              : ""
+            }"
+          >
+
+        </div>
+
+
+        <button
+          class="saveButton"
+          onclick="saveReport(
+            this,
+            '${report.ticket}'
+          )">
+
+          💾 บันทึกการเปลี่ยนแปลง
+
+        </button>
+
+      `;
+
+
+      container.appendChild(card);
+
+    });
+
+
+  filterReports();
+
+}
+
+
+/* =========================
+   Search
+========================= */
+
+function filterReports() {
+
+  const keyword =
+    document
+      .getElementById("searchBox")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const cards =
+    document.querySelectorAll(".card");
+
+
+  cards.forEach(function(card) {
+
+    const text =
+      card.textContent.toLowerCase();
+
+
+    if (
+      !keyword ||
+      text.includes(keyword)
+    ) {
+
+      card.style.display = "";
+
+    } else {
+
+      card.style.display = "none";
+
+    }
 
   });
 
 }
-  async function saveReport(button, ticket) {
 
-  const card = button.closest(".card");
+
+/* =========================
+   Clear Completed
+========================= */
+
+function clearCompleted() {
+
+  const completed =
+    allReports.filter(function(report) {
+
+      return report.status === "ซ่อมเสร็จแล้ว";
+
+    });
+
+
+  if (completed.length === 0) {
+
+    alert(
+      "ไม่มีงานที่ซ่อมเสร็จแล้วให้เคลียร์"
+    );
+
+    return;
+
+  }
+
+
+  const confirmClear =
+    confirm(
+      "ต้องการเคลียร์งานที่ซ่อมเสร็จแล้วทั้งหมดหรือไม่?\n\n" +
+      "จำนวน " +
+      completed.length +
+      " รายการ\n\n" +
+      "ข้อมูลจะไม่ถูกลบจาก Google Sheets"
+    );
+
+
+  if (!confirmClear) {
+    return;
+  }
+
+
+  completed.forEach(function(report) {
+
+    if (
+      !hiddenCompletedTickets.includes(
+        report.ticket
+      )
+    ) {
+
+      hiddenCompletedTickets.push(
+        report.ticket
+      );
+
+    }
+
+  });
+
+
+  localStorage.setItem(
+    "hiddenCompletedTickets",
+    JSON.stringify(
+      hiddenCompletedTickets
+    )
+  );
+
+
+  displayReports(allReports);
+
+
+  alert(
+    "🧹 เคลียร์งานที่ซ่อมเสร็จแล้วเรียบร้อยแล้ว"
+  );
+
+}
+
+
+/* =========================
+   Show Completed
+========================= */
+
+function showCompleted() {
+
+  hiddenCompletedTickets = [];
+
+
+  localStorage.setItem(
+    "hiddenCompletedTickets",
+    JSON.stringify([])
+  );
+
+
+  displayReports(allReports);
+
+
+  alert(
+    "↩️ แสดงงานที่เคลียร์แล้วทั้งหมด"
+  );
+
+}
+
+
+/* =========================
+   Save Report
+========================= */
+
+async function saveReport(
+  button,
+  ticket
+) {
+
+  const card =
+    button.closest(".card");
+
 
   const status =
-    card.querySelector(".statusSelect").value;
+    card
+      .querySelector(".statusSelect")
+      .value;
+
 
   const technician =
-    card.querySelector(".technicianInput").value;
+    card
+      .querySelector(".technicianInput")
+      .value;
+
 
   const completedDate =
-    card.querySelector(".completedDateInput").value;
+    card
+      .querySelector(".completedDateInput")
+      .value;
+
 
   const data = {
+
     action: "updateReport",
+
     ticket: ticket,
+
     status: status,
+
     technician: technician,
+
     completedDate: completedDate
+
   };
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "⏳ กำลังบันทึก...";
+
 
   try {
 
-    const response = await fetch(
-      GAS_URL,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify(data)
-      }
-    );
+    const response =
+      await fetch(
 
-    const result = await response.json();
+        GAS_URL,
+
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type":
+              "text/plain;charset=utf-8"
+
+          },
+
+          body:
+            JSON.stringify(data)
+
+        }
+
+      );
+
+
+    const result =
+      await response.json();
+
 
     if (!result.success) {
-      throw new Error(result.message || "บันทึกไม่สำเร็จ");
+
+      throw new Error(
+        result.message ||
+        "บันทึกไม่สำเร็จ"
+      );
+
     }
 
-    alert("บันทึกข้อมูลเรียบร้อยแล้ว");
+
+    alert(
+      "✅ บันทึกข้อมูลเรียบร้อยแล้ว"
+    );
+
+
+    await loadReports();
+
 
   } catch (error) {
 
@@ -281,10 +1055,22 @@ function displayReports(reports) {
     );
 
   }
+
+
+  button.disabled = false;
+
+  button.textContent =
+    "💾 บันทึกการเปลี่ยนแปลง";
+
 }
 
 
+/* =========================
+   Start
+========================= */
+
 loadReports();
+
 
 </script>
 
