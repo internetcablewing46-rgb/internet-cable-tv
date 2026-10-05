@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>แจ้งเสีย Internet และ Cable TV</title>
+  <title>แจ้งเสีย Internet - Cable TV</title>
 
   <style>
     body {
@@ -23,16 +23,15 @@
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     }
 
-    h1 {
+    h2 {
       text-align: center;
-      font-size: 24px;
       margin-bottom: 25px;
     }
 
     label {
       display: block;
       margin-top: 15px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       font-weight: bold;
     }
 
@@ -58,20 +57,19 @@
       padding: 14px;
       border: none;
       border-radius: 8px;
-      background: #06c755;
+      background: #1976d2;
       color: white;
       font-size: 18px;
-      font-weight: bold;
       cursor: pointer;
     }
 
     button:disabled {
-      background: #aaa;
+      background: #999;
     }
 
-    .message {
-      margin-top: 20px;
+    #message {
       text-align: center;
+      margin-top: 15px;
       font-weight: bold;
     }
   </style>
@@ -81,7 +79,7 @@
 
 <div class="container">
 
-  <h1>📡 แจ้งเสีย Internet และ Cable TV</h1>
+  <h2>📡 แจ้งเสีย Internet - Cable TV</h2>
 
   <form id="reportForm">
 
@@ -94,7 +92,7 @@
 
     <label>เบอร์โทร</label>
     <input
-      type="tel"
+      type="text"
       id="phone"
       placeholder="กรอกเบอร์โทร"
       required
@@ -113,14 +111,13 @@
       type="text"
       id="address"
       placeholder="เช่น ซอย 2 บ้านเลขที่ 45"
-      required
     >
 
     <label>ปัญหา</label>
     <input
       type="text"
       id="problem"
-      placeholder="เช่น Internet ใช้งานไม่ได้"
+      placeholder="ระบุอาการเสีย"
       required
     >
 
@@ -130,125 +127,102 @@
       placeholder="รายละเอียดเพิ่มเติม"
     ></textarea>
 
-    <button type="submit" id="submitBtn">
+    <button type="submit" id="submitButton">
       แจ้งเสีย
     </button>
 
-    <div class="message" id="message"></div>
-
   </form>
+
+  <div id="message"></div>
 
 </div>
 
-<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
 <script>
 
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbyMpxvS7QIFOfTOe8x6Rea9GA79HbIE2UIolDKBTixXxuvTrGoMoC5cDK6YvEnFgUc7/exec";
-  const LIFF_ID = "2011831663-lTzHshSv";
-  async function initLIFF() {
-  try {
-    await liff.init({
-      liffId: LIFF_ID
-    });
+const GAS_URL =
+  "https://script.google.com/macros/s/AKfycbyMpxvS7QIFOfTOe8x6Rea9GA79HbIE2UIolDKBTixXxuvTrGoMoC5cDK6YvEnFgUc7/exec";
 
-    if (!liff.isLoggedIn()) {
-      liff.login();
-      return;
-    }
-
-    const profile = await liff.getProfile();
-
-    window.lineUserId = profile.userId;
-
-    console.log("LINE User ID:", profile.userId);
-
-  } catch (error) {
-    console.error("LIFF Error:", error);
-  }
-}
-
-initLIFF();
-
-  let isSubmitting = false;
-
-  document
-    .getElementById("reportForm")
-    .addEventListener("submit", async function(event) {
-
-      event.preventDefault();
-
-      if (isSubmitting) {
-        return;
-      }
-
-      isSubmitting = true;
-
-      const submitBtn =
-        document.getElementById("submitBtn");
-
-      const message =
-        document.getElementById("message");
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = "กำลังส่งข้อมูล...";
-
-      const data = {
-        action: "save_report",
-
-        type:
-          document.getElementById("type").value,
-
-        phone:
-          document.getElementById("phone").value,
-
-        reporter:
-          document.getElementById("reporter").value,
-
-        address:
-          document.getElementById("address").value,
-
-        problem:
-          document.getElementById("problem").value,
-
-        detail:
-          document.getElementById("detail").value,
-
-        line_user_id: window.lineUserId || ""
-      };
-
-      try {
-
-       await fetch(GAS_URL, {
-  method: "POST",
-  mode: "no-cors",
-  body: JSON.stringify(data)
-});
-
-message.textContent =
-  "✅ แจ้งเสียเรียบร้อยแล้ว";
-
-message.style.color = "green";
 
 document
   .getElementById("reportForm")
-  .reset();
+  .addEventListener("submit", async function(event) {
 
-      } catch (error) {
+    event.preventDefault();
 
-        message.textContent =
-          "❌ ไม่สามารถเชื่อมต่อระบบได้";
+    const button =
+      document.getElementById("submitButton");
 
-        message.style.color = "red";
+    const message =
+      document.getElementById("message");
 
-      }
+    button.disabled = true;
+    button.textContent = "กำลังส่งข้อมูล...";
 
-      isSubmitting = false;
+    const data = {
 
-      submitBtn.disabled = false;
-      submitBtn.textContent = "แจ้งเสีย";
+      action: "save_report",
 
-    });
+      type:
+        document.getElementById("type").value,
+
+      phone:
+        document.getElementById("phone").value,
+
+      reporter:
+        document.getElementById("reporter").value,
+
+      address:
+        document.getElementById("address").value,
+
+      problem:
+        document.getElementById("problem").value,
+
+      detail:
+        document.getElementById("detail").value,
+
+      line_user_id: ""
+
+    };
+
+
+    try {
+
+      await fetch(GAS_URL, {
+
+        method: "POST",
+
+        mode: "no-cors",
+
+        body: JSON.stringify(data)
+
+      });
+
+
+      message.textContent =
+        "✅ แจ้งเสียเรียบร้อยแล้ว";
+
+      message.style.color = "green";
+
+      document
+        .getElementById("reportForm")
+        .reset();
+
+
+    } catch (error) {
+
+      message.textContent =
+        "❌ ไม่สามารถส่งข้อมูลได้";
+
+      message.style.color = "red";
+
+    }
+
+
+    button.disabled = false;
+    button.textContent = "แจ้งเสีย";
+
+  });
 
 </script>
 
