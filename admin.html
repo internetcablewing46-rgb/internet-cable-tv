@@ -605,11 +605,8 @@ function displayReports(reports) {
   if (!reports || reports.length === 0) {
 
     container.innerHTML =
-
       `<div class="empty">
-
         📭 ยังไม่มีรายการแจ้งเสีย
-
       </div>`;
 
     return;
@@ -625,15 +622,9 @@ function displayReports(reports) {
     .forEach(function(report) {
 
 
-      if (
-        report.status === "ซ่อมเสร็จแล้ว" &&
-        hiddenCompletedTickets.includes(
-          report.ticket
-        )
-      ) {
-
+      // ซ่อนงานที่ถูกเคลียร์จาก Google Sheets
+      if (report.hidden === true) {
         return;
-
       }
 
 
@@ -653,9 +644,7 @@ function displayReports(reports) {
       card.innerHTML = `
 
         <div class="ticket">
-
           🎫 ${report.ticket || "-"}
-
         </div>
 
 
@@ -851,12 +840,13 @@ function filterReports() {
    Clear Completed
 ========================= */
 
-function clearCompleted() {
+async function clearCompleted() {
 
   const completed =
     allReports.filter(function(report) {
 
-      return report.status === "ซ่อมเสร็จแล้ว";
+      return report.status === "ซ่อมเสร็จแล้ว" &&
+             !report.hidden;
 
     });
 
@@ -887,37 +877,59 @@ function clearCompleted() {
   }
 
 
-  completed.forEach(function(report) {
+  try {
 
-    if (
-      !hiddenCompletedTickets.includes(
-        report.ticket
-      )
-    ) {
+    const response =
+      await fetch(
+        GAS_URL,
+        {
+          method: "POST",
 
-      hiddenCompletedTickets.push(
-        report.ticket
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+
+          body: JSON.stringify({
+            action: "clearCompleted"
+          })
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message ||
+        "เคลียร์งานไม่สำเร็จ"
       );
 
     }
 
-  });
+
+    alert(
+      "🧹 เคลียร์งานที่ซ่อมเสร็จแล้วเรียบร้อยแล้ว\n\n" +
+      "จำนวน " +
+      (result.count || completed.length) +
+      " รายการ"
+    );
 
 
-  localStorage.setItem(
-    "hiddenCompletedTickets",
-    JSON.stringify(
-      hiddenCompletedTickets
-    )
-  );
+    await loadReports();
 
 
-  displayReports(allReports);
+  } catch (error) {
 
+    alert(
+      "❌ เคลียร์งานไม่สำเร็จ\n\n" +
+      error.message
+    );
 
-  alert(
-    "🧹 เคลียร์งานที่ซ่อมเสร็จแล้วเรียบร้อยแล้ว"
-  );
+  }
 
 }
 
@@ -928,17 +940,7 @@ function clearCompleted() {
 
 function showCompleted() {
 
-  hiddenCompletedTickets = [];
-
-
-  localStorage.setItem(
-    "hiddenCompletedTickets",
-    JSON.stringify([])
-  );
-
-
   displayReports(allReports);
-
 
   alert(
     "↩️ แสดงงานที่เคลียร์แล้วทั้งหมด"
