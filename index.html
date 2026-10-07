@@ -989,56 +989,57 @@ async function initLIFF() {
       liffId: LIFF_ID
     });
 
+    console.log("LIFF initialized");
 
     if (!liff.isLoggedIn()) {
+
+      console.log("ยังไม่ได้ Login LINE");
 
       liff.login();
 
       return;
-
     }
 
+    const profile = await liff.getProfile();
 
-    const profile =
-      await liff.getProfile();
+    lineUserId = profile.userId;
 
+    console.log("LINE User ID:", lineUserId);
 
-    lineUserId =
-  profile.userId;
+    const lineStatus =
+      document.getElementById("lineStatus");
 
+    if (lineStatus) {
 
-// แสดงสถานะการเชื่อมต่อ LINE
-const lineStatus =
-  document.getElementById("lineStatus");
+      lineStatus.textContent =
+        "🟢 เชื่อมต่อ LINE แล้ว";
 
-if (lineStatus) {
+      lineStatus.style.color =
+        "#16A34A";
 
-  lineStatus.textContent =
-    "🟢 เชื่อมต่อ LINE แล้ว";
-  lineStatus.style.background =
-    "#F0FDF4";
-
-  lineStatus.style.color =
-    "#16A34A";
-
-}
-  
-
-console.log(
-  "LINE User ID:",
-  lineUserId
-);
-
+      lineStatus.style.background =
+        "#F0FDF4";
+    }
 
   } catch (error) {
 
-    console.error(
-      "LIFF Error:",
-      error
-    );
+    console.error("LIFF Error:", error);
 
+    const lineStatus =
+      document.getElementById("lineStatus");
+
+    if (lineStatus) {
+
+      lineStatus.textContent =
+        "🔴 ไม่สามารถเชื่อมต่อ LINE";
+
+      lineStatus.style.color =
+        "#DC2626";
+
+      lineStatus.style.background =
+        "#FEF2F2";
+    }
   }
-
 }
 
 
@@ -1108,9 +1109,10 @@ document
           ).value,
 
         line_user_id:
-          lineUserId
+          lineUserId || ""
 
       };
+      console.log("ก่อนส่ง LINE User ID:", lineUserId);
 
 
       try {
