@@ -1185,10 +1185,10 @@ if (!/^[0-9]{10}$/.test(phone)) {
       console.log("ก่อนส่ง LINE User ID:", lineUserId);
 
 
-     try {
+    try {
 
   // ส่งข้อมูลไป Apps Script
-  // ใช้ no-cors และไม่อ่าน response.json()
+  // ไม่รอ response จาก POST
   await fetch(
     GAS_URL,
     {
@@ -1203,89 +1203,10 @@ if (!/^[0-9]{10}$/.test(phone)) {
     }
   );
 
-  /*
-   * รอให้ Apps Script บันทึกข้อมูล
-   * แล้วอ่านรายการล่าสุดกลับมาเพื่อหา Ticket จริง
-   */
-
-  let latestReport = null;
-
-  for (let i = 0; i < 5; i++) {
-
-    await new Promise(function(resolve) {
-      setTimeout(resolve, 1000);
-    });
-
-    try {
-
-      const response =
-        await fetch(
-          GAS_URL +
-          "?action=getReports&t=" +
-          Date.now()
-        );
-
-      const result =
-        await response.json();
-
-      if (result.success && result.reports) {
-
-        const matches =
-          result.reports.filter(function(report) {
-
-            return (
-              String(report.lineUserId || "") ===
-              String(lineUserId || "") &&
-
-              String(report.phone || "") ===
-              String(data.phone || "") &&
-
-              String(report.reporter || "") ===
-              String(data.reporter || "") &&
-
-              String(report.address || "") ===
-              String(data.address || "") &&
-
-              String(report.problem || "") ===
-              String(data.problem || "")
-            );
-
-          });
-
-        if (matches.length > 0) {
-
-          latestReport =
-            matches[matches.length - 1];
-
-          break;
-
-        }
-
-      }
-
-    } catch (readError) {
-
-      console.log(
-        "รออ่านข้อมูลรอบที่ " +
-        (i + 1),
-        readError
-      );
-
-    }
-
-  }
-
-
-  /* ========================= */
-  /* ใส่ข้อมูลหน้าสำเร็จ */
-  /* ========================= */
-
+  // แสดงหน้าสำเร็จทันที
   document
     .getElementById("successTicket")
-    .textContent =
-      latestReport
-        ? latestReport.ticket
-        : "-";
+    .textContent = "-";
 
   document
     .getElementById("successType")
@@ -1320,15 +1241,9 @@ if (!/^[0-9]{10}$/.test(phone)) {
   document
     .getElementById("successStatus")
     .textContent =
-      latestReport
-        ? latestReport.status
-        : "รอตรวจสอบ";
+      "รอตรวจสอบ";
 
-
-  /* ========================= */
-  /* แสดงหน้าสำเร็จ */
-  /* ========================= */
-
+  // เปลี่ยนไปหน้าสำเร็จ
   document
     .getElementById("formPage")
     .style.display =
@@ -1339,15 +1254,10 @@ if (!/^[0-9]{10}$/.test(phone)) {
     .style.display =
       "block";
 
-
-  /* ========================= */
-  /* ล้างฟอร์ม */
-  /* ========================= */
-
+  // ล้างฟอร์ม
   document
     .getElementById("reportForm")
     .reset();
-
 
 } catch (error) {
 
