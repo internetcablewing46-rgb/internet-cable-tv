@@ -1185,152 +1185,178 @@ if (!/^[0-9]{10}$/.test(phone)) {
       console.log("ก่อนส่ง LINE User ID:", lineUserId);
 
 
-      try {
+     try {
 
+  // ส่งข้อมูลไป Apps Script
+  // ใช้ no-cors และไม่อ่าน response.json()
+  await fetch(
+    GAS_URL,
+    {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type":
+          "text/plain;charset=utf-8"
+      },
+      body:
+        JSON.stringify(data)
+    }
+  );
 
-        /*
-         * สำคัญ:
-         * ใช้ response จาก doPost()
-         * เพื่อรับ Ticket กลับมา
-         */
+  /*
+   * รอให้ Apps Script บันทึกข้อมูล
+   * แล้วอ่านรายการล่าสุดกลับมาเพื่อหา Ticket จริง
+   */
 
-        const response =
-         await fetch(
-  GAS_URL,
-  {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type":
-        "text/plain;charset=utf-8"
-    },
-    body:
-      JSON.stringify(data)
-  }
-);
+  let latestReport = null;
 
+  for (let i = 0; i < 5; i++) {
 
-        const result =
-          await response.json();
+    await new Promise(function(resolve) {
+      setTimeout(resolve, 1000);
+    });
 
+    try {
 
-        if (!result.success) {
+      const response =
+        await fetch(
+          GAS_URL +
+          "?action=getReports&t=" +
+          Date.now()
+        );
 
-          throw new Error(
-            result.message ||
-            "ไม่สามารถบันทึกข้อมูลได้"
-          );
+      const result =
+        await response.json();
+
+      if (result.success && result.reports) {
+
+        const matches =
+          result.reports.filter(function(report) {
+
+            return (
+              String(report.lineUserId || "") ===
+              String(lineUserId || "") &&
+
+              String(report.phone || "") ===
+              String(data.phone || "") &&
+
+              String(report.reporter || "") ===
+              String(data.reporter || "") &&
+
+              String(report.address || "") ===
+              String(data.address || "") &&
+
+              String(report.problem || "") ===
+              String(data.problem || "")
+            );
+
+          });
+
+        if (matches.length > 0) {
+
+          latestReport =
+            matches[matches.length - 1];
+
+          break;
 
         }
 
-
-        /* ========================= */
-        /* ใส่ข้อมูลหน้าสำเร็จ */
-        /* ========================= */
-
-
-        document
-          .getElementById(
-            "successTicket"
-          )
-          .textContent =
-            result.ticket || "-";
-
-
-        document
-          .getElementById(
-            "successType"
-          )
-          .textContent =
-            result.type || "-";
-
-
-        document
-          .getElementById(
-            "successPhone"
-          )
-          .textContent =
-            result.phone || "-";
-
-
-        document
-          .getElementById(
-            "successReporter"
-          )
-          .textContent =
-            result.reporter || "-";
-
-
-        document
-          .getElementById(
-            "successAddress"
-          )
-          .textContent =
-            result.address || "-";
-
-
-        document
-          .getElementById(
-            "successProblem"
-          )
-          .textContent =
-            result.problem || "-";
-
-
-        document
-          .getElementById(
-            "successDetail"
-          )
-          .textContent =
-            result.detail || "-";
-
-
-        document
-          .getElementById(
-            "successStatus"
-          )
-          .textContent =
-            result.status ||
-            "รอตรวจสอบ";
-
-
-        /* แสดงหน้าสำเร็จ */
-
-        document
-          .getElementById(
-            "formPage"
-          )
-          .style.display =
-            "none";
-
-
-        document
-          .getElementById(
-            "successPage"
-          )
-          .style.display =
-            "block";
-
-
-        /* ล้างฟอร์ม */
-
-        document
-          .getElementById(
-            "reportForm"
-          )
-          .reset();
-
-
-      } catch (error) {
-
-
-        alert(
-          "❌ ไม่สามารถส่งข้อมูลได้\n\n" +
-          error.message
-        );
-
-
       }
+
+    } catch (readError) {
+
+      console.log(
+        "รออ่านข้อมูลรอบที่ " +
+        (i + 1),
+        readError
+      );
+
+    }
+
+  }
+
+
+  /* ========================= */
+  /* ใส่ข้อมูลหน้าสำเร็จ */
+  /* ========================= */
+
+  document
+    .getElementById("successTicket")
+    .textContent =
+      latestReport
+        ? latestReport.ticket
+        : "-";
+
+  document
+    .getElementById("successType")
+    .textContent =
+      data.type || "-";
+
+  document
+    .getElementById("successPhone")
+    .textContent =
+      data.phone || "-";
+
+  document
+    .getElementById("successReporter")
+    .textContent =
+      data.reporter || "-";
+
+  document
+    .getElementById("successAddress")
+    .textContent =
+      data.address || "-";
+
+  document
+    .getElementById("successProblem")
+    .textContent =
+      data.problem || "-";
+
+  document
+    .getElementById("successDetail")
+    .textContent =
+      data.detail || "-";
+
+  document
+    .getElementById("successStatus")
+    .textContent =
+      latestReport
+        ? latestReport.status
+        : "รอตรวจสอบ";
+
+
+  /* ========================= */
+  /* แสดงหน้าสำเร็จ */
+  /* ========================= */
+
+  document
+    .getElementById("formPage")
+    .style.display =
+      "none";
+
+  document
+    .getElementById("successPage")
+    .style.display =
+      "block";
+
+
+  /* ========================= */
+  /* ล้างฟอร์ม */
+  /* ========================= */
+
+  document
+    .getElementById("reportForm")
+    .reset();
+
+
+} catch (error) {
+
+  alert(
+    "❌ ไม่สามารถส่งข้อมูลได้\n\n" +
+    error.message
+  );
+
+}
 
 
       button.disabled = false;
