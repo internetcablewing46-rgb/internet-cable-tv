@@ -665,8 +665,10 @@
           <input
             type="text"
             id="phone"
+            maxlength="10"
             placeholder="กรอกเบอร์โทร"
             inputmode="numeric"
+            pattern="[0-9]{10}"
             required
           >
 
@@ -1061,6 +1063,20 @@ document
     async function(event) {
 
       event.preventDefault();
+      const phone =
+  document.getElementById("phone").value.trim();
+
+if (!/^[0-9]{10}$/.test(phone)) {
+
+  alert(
+    "⚠️ กรุณากรอกเบอร์โทรให้ครบ 10 หลัก"
+  );
+
+  document.getElementById("phone").focus();
+
+  return;
+}
+
       if (!liffReady || !lineUserId) {
 
   alert(
