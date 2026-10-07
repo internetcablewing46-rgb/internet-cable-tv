@@ -610,6 +610,20 @@
 
 
       <form id="reportForm">
+        <div
+  id="lineStatus"
+  style="
+    text-align:center;
+    padding:10px;
+    margin-bottom:15px;
+    border-radius:10px;
+    background:#F0FDF4;
+    color:#16A34A;
+    font-weight:bold;
+  "
+>
+  🟡 กำลังเชื่อมต่อ LINE...
+</div>
 
 
         <div class="form-group">
@@ -990,13 +1004,28 @@ async function initLIFF() {
 
 
     lineUserId =
-      profile.userId;
+  profile.userId;
 
 
-    console.log(
-      "LINE User ID:",
-      lineUserId
-    );
+// แสดงสถานะการเชื่อมต่อ LINE
+const lineStatus =
+  document.getElementById("lineStatus");
+
+if (lineStatus) {
+
+  lineStatus.textContent =
+    "🟢 เชื่อมต่อ LINE แล้ว";
+
+  lineStatus.style.color =
+    "#16A34A";
+
+}
+  
+
+console.log(
+  "LINE User ID:",
+  lineUserId
+);
 
 
   } catch (error) {
