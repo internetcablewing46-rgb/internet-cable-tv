@@ -682,12 +682,43 @@
             <span class="required">*</span>
           </label>
 
-          <input
-            type="text"
-            id="reporter"
-            placeholder="ชื่อผู้แจ้ง"
-            required
-          >
+         <select id="prefix" required>
+  <option value="">กรุณาเลือกคำนำหน้าชื่อ</option>
+  <option value="นาย">นาย</option>
+  <option value="นาง">นาง</option>
+  <option value="นางสาว">นางสาว</option>
+  <option value="จ.ต.">จ.ต.</option>
+  <option value="จ.ท.">จ.ท.</option>
+  <option value="จ.อ.">จ.อ.</option>
+  <option value="พ.อ.ต.">พ.อ.ต.</option>
+  <option value="พ.อ.ท.">พ.อ.ท.</option>
+  <option value="พ.อ.อ.">พ.อ.อ.</option>
+  <option value="ร.ต.">ร.ต.</option>
+  <option value="ร.ท.">ร.ท.</option>
+  <option value="ร.อ.">ร.อ.</option>
+  <option value="น.ต.">น.ต.</option>
+  <option value="น.ท.">น.ท.</option>
+  <option value="น.อ.">น.อ.</option>
+  <option value="จ.ต.(หญิง)">จ.ต.(หญิง)</option>
+  <option value="จ.ท.(หญิง)">จ.ท.(หญิง)</option>
+  <option value="จ.อ.(หญิง)">จ.อ.(หญิง)</option>
+  <option value="พ.อ.ต.(หญิง)">พ.อ.ต.(หญิง)</option>
+  <option value="พ.อ.ท.(หญิง)">พ.อ.ท.(หญิง)</option>
+  <option value="พ.อ.อ.(หญิง)">พ.อ.อ.(หญิง)</option>
+  <option value="ร.ต.(หญิง)">ร.ต.(หญิง)</option>
+  <option value="ร.ท.(หญิง)">ร.ท.(หญิง)</option>
+  <option value="ร.อ.(หญิง)">ร.อ.(หญิง)</option>
+  <option value="น.ต.(หญิง)">น.ต.(หญิง)</option>
+  <option value="น.ท.(หญิง)">น.ท.(หญิง)</option>
+  <option value="น.อ.(หญิง)">น.อ.(หญิง)</option>
+</select>
+
+<input
+  type="text"
+  id="reporter"
+  placeholder="ชื่อผู้แจ้ง"
+  required
+>
 
         </div>
 
@@ -1063,6 +1094,19 @@ document
     async function(event) {
 
       event.preventDefault();
+      const prefix =
+  document.getElementById("prefix").value;
+
+if (!prefix) {
+
+  alert(
+    "⚠️ กรุณาเลือกคำนำหน้าชื่อ"
+  );
+
+  document.getElementById("prefix").focus();
+
+  return;
+}
       const phone =
   document.getElementById("phone").value.trim();
 
@@ -1114,10 +1158,10 @@ if (!/^[0-9]{10}$/.test(phone)) {
             "phone"
           ).value,
 
-        reporter:
-          document.getElementById(
-            "reporter"
-          ).value,
+       reporter:
+  prefix +
+  " " +
+  document.getElementById("reporter").value.trim(),
 
         address:
           document.getElementById(
